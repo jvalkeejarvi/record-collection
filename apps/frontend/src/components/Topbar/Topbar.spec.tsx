@@ -1,11 +1,10 @@
 import { render } from '@testing-library/react';
 
-import App from './app';
+import Topbar from './Topbar';
 
-describe('App', () => {
+describe('Topbar', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<App />);
-
+    const { baseElement } = render(<Topbar />);
     expect(baseElement).toBeTruthy();
   });
 });

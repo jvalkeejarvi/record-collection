@@ -1,0 +1,7 @@
+.topbar {
+  border-bottom: 1px solid black;
+}
+
+.topbar > h1 {
+  margin-top: 0;
+}

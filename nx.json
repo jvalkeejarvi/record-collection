@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "graphql-and-react",
+  "npmScope": "record-collection",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
@@ -44,7 +44,9 @@
         "babel": true
       },
       "component": {
-        "style": "css"
+        "style": "css",
+        "pascalCaseFiles": true,
+        "pascalCaseDirectory": true
       },
       "library": {
         "style": "css",
