@@ -4,5 +4,6 @@
 
 export type UpdateRecordDto = {
     name: string;
+    artist: string;
 };
 

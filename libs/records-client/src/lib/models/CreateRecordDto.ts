@@ -4,5 +4,6 @@
 
 export type CreateRecordDto = {
     name: string;
+    artist: string;
 };
 

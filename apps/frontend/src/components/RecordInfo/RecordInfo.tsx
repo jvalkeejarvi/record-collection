@@ -24,6 +24,7 @@ export function RecordInfo({ id }: RecordInfoProps) {
 
   return (
     <div>
+      <p>{record.artist}</p>
       <p>{record.name}</p>
       <p>{record.id}</p>
     </div>

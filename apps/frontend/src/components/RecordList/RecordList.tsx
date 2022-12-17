@@ -1,12 +1,12 @@
 import { Button } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { RecordEntity } from '@record-collection/records-client';
 import { useCallback } from 'react';
 
 import {
   deleteRecord,
   getRecordsState,
   recordsActions,
-  RecordsEntity,
   selectAllRecord
 } from '../../app/recordSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -40,9 +40,9 @@ export function RecordList() {
       field: 'name',
       headerName: 'Name',
       width: 500,
-      renderCell: (params: GridRenderCellParams<RecordsEntity>) => <Record record={params.row}></Record>
+      renderCell: (params: GridRenderCellParams<RecordEntity>) => <Record record={params.row}></Record>
     },
-    { field: 'email', headerName: 'email', width: 500 },
+    { field: 'artist', headerName: 'Artist', width: 500 },
     {
       // HACK: empty field name results in incorrect column header background
       field: '____',
@@ -51,7 +51,7 @@ export function RecordList() {
       sortable: false,
       filterable: false,
       width: 100,
-      renderCell: (params: GridRenderCellParams<RecordsEntity>) =>
+      renderCell: (params: GridRenderCellParams<RecordEntity>) =>
         <DeleteRecord id={params.row.id} onDelete={onDelete}></DeleteRecord>
     },
   ];

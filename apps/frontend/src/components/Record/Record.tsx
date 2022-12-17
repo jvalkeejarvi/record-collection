@@ -1,10 +1,9 @@
 import { Link } from '@mui/material';
+import { RecordEntity } from '@record-collection/records-client';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { RecordsEntity } from '../../app/recordSlice';
-
 export interface RecordProps {
-  record: RecordsEntity;
+  record: RecordEntity;
 }
 
 export function Record({ record }: RecordProps) {

@@ -5,5 +5,6 @@
 export type RecordEntity = {
     id: number;
     name: string;
+    artist: string;
 };
 
