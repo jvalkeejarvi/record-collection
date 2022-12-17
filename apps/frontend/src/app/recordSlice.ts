@@ -8,6 +8,7 @@ import {
   EntityState,
   PayloadAction,
 } from '@reduxjs/toolkit';
+import { recordsService } from './recordApi';
 
 export const RECORDS_FEATURE_KEY = 'records';
 
@@ -27,33 +28,19 @@ export const recordsAdapter = createEntityAdapter<RecordsEntity>();
 
 export const fetchRecords = createAsyncThunk(
   'records/fetch',
-  async () => {
-    const res = await fetch('https://jsonplaceholder.typicode.com/comments?_limit=50');
-    return res.json();
-  }
+  async () => recordsService.getRecords()
 );
 
 export const deleteRecord = createAsyncThunk(
   'records/delete',
   async (id: number) => {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/comments/${id}`, { method: 'DELETE' });
-    if (!res.ok) {
-      throw Error(res.statusText);
-    }
-    return res.json();
+    await recordsService.deleteRecord(id);
   }
 );
 
 export const addRecord = createAsyncThunk(
   'records/create',
-  async (name: string) => {
-    const req = await fetch('https://jsonplaceholder.typicode.com/comments/', {
-      method: 'POST',
-      body: JSON.stringify({ name })
-    });
-    const res = await req.json();
-    return { ...res, name };
-  }
+  async (name: string) => recordsService.createRecord({ name })
 );
 
 export const initialRecordsState: RecordsState =

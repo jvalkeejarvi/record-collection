@@ -1,3 +1,5 @@
+import { RecordEntity } from '@record-collection/records-client';
+import { mockOf } from '../utils/test-utils';
 import {
   addRecord,
   deleteRecord,
@@ -37,7 +39,7 @@ describe('records reducer', () => {
     state = recordsReducer(
       state,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      fetchRecords.fulfilled([{ id: 1 }], null as any)
+      fetchRecords.fulfilled([mockOf<RecordEntity>({ id: 1 })], null as any)
     );
 
     expect(state).toEqual(
@@ -67,7 +69,7 @@ describe('records reducer', () => {
     let state = recordsReducer(
       undefined,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      fetchRecords.fulfilled([{ id: 4 }, { id: 5 }], null as any)
+      fetchRecords.fulfilled(mockOf<RecordEntity[]>([{ id: 4 }, { id: 5 }]), null as any)
     );
 
     state = recordsReducer(
@@ -99,7 +101,7 @@ describe('records reducer', () => {
     state = recordsReducer(
       state,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      deleteRecord.fulfilled(null, null as any, 4)
+      deleteRecord.fulfilled(undefined, null as any, 4)
     );
 
     expect(state).toEqual(
@@ -127,7 +129,7 @@ describe('records reducer', () => {
     let state = recordsReducer(
       undefined,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      fetchRecords.fulfilled([{ id: 1 }], null as any)
+      fetchRecords.fulfilled([mockOf<RecordEntity>({ id: 1 })], null as any)
     );
 
     expect(state).toEqual(
