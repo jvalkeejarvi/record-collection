@@ -6,22 +6,22 @@ import { UpdateRecordDto } from './update-recort-dto';
 @Injectable()
 export class RecordsService {
   private records: RecordEntity[] = [
-    { id: 1, name: 'Can\'t Buy A Thrill' },
-    { id: 2, name: 'Countdown To Ecstacy' },
-    { id: 3, name: 'Pretzel Logic' },
-    { id: 4, name: 'Katy Lied' },
-    { id: 5, name: 'The Royal Scam' },
-    { id: 6, name: 'Aja' },
-    { id: 7, name: 'Gaucho' },
-    { id: 8, name: 'Two Against Nature' },
-    { id: 10, name: 'Homework' },
-    { id: 11, name: 'Discovery' },
-    { id: 12, name: 'Human After All' },
-    { id: 13, name: 'Random Access Memories' },
-    { id: 13, name: 'The Nightfly' },
-    { id: 14, name: 'Kamakiriad' },
-    { id: 15, name: 'Morph the Cat' },
-    { id: 16, name: 'Sunken Condos' },
+    { id: 1, name: 'Can\'t Buy A Thrill', artist: 'Steely Dan' },
+    { id: 2, name: 'Countdown To Ecstacy', artist: 'Steely Dan' },
+    { id: 3, name: 'Pretzel Logic', artist: 'Steely Dan' },
+    { id: 4, name: 'Katy Lied', artist: 'Steely Dan' },
+    { id: 5, name: 'The Royal Scam', artist: 'Steely Dan' },
+    { id: 6, name: 'Aja', artist: 'Steely Dan' },
+    { id: 7, name: 'Gaucho', artist: 'Steely Dan' },
+    { id: 8, name: 'Two Against Nature', artist: 'Steely Dan' },
+    { id: 10, name: 'Homework', artist: 'Daft Punk' },
+    { id: 11, name: 'Discovery', artist: 'Daft Punk' },
+    { id: 12, name: 'Human After All', artist: 'Daft Punk' },
+    { id: 13, name: 'Random Access Memories', artist: 'Daft Punk' },
+    { id: 13, name: 'The Nightfly', artist: 'Donald Fagen' },
+    { id: 14, name: 'Kamakiriad', artist: 'Donald Fagen' },
+    { id: 15, name: 'Morph the Cat', artist: 'Donald Fagen' },
+    { id: 16, name: 'Sunken Condos', artist: 'Donald Fagen' },
   ];
 
   public getRecords(): RecordEntity[] {
