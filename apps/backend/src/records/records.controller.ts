@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
-import { ApiTags} from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateRecordDto } from './create-record-dto';
 import { RecordEntity } from './record-dto';
 import { RecordsService } from './records.service';
