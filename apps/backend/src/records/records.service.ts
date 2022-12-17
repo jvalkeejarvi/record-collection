@@ -37,8 +37,9 @@ export class RecordsService {
   }
 
   public createRecord(record: CreateRecordDto): RecordEntity {
+    const maxId = Math.max(...this.records.map(r => r.id));
     const newRecord = {
-      id: new Date().getTime(),
+      id: maxId + 1,
       ...record,
     };
     this.records.push(newRecord);
