@@ -3,11 +3,11 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useCallback } from 'react';
 
 import {
-    deleteRecord,
-    getRecordsState,
-    recordsActions,
-    RecordsEntity,
-    selectAllRecord
+  deleteRecord,
+  getRecordsState,
+  recordsActions,
+  RecordsEntity,
+  selectAllRecord
 } from '../../app/recordSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import CreateRecord from '../CreateRecord/CreateRecord';
