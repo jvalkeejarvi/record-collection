@@ -14,6 +14,14 @@ export class RecordsService {
     { id: 6, name: 'Aja' },
     { id: 7, name: 'Gaucho' },
     { id: 8, name: 'Two Against Nature' },
+    { id: 10, name: 'Homework' },
+    { id: 11, name: 'Discovery' },
+    { id: 12, name: 'Human After All' },
+    { id: 13, name: 'Random Access Memories' },
+    { id: 13, name: 'The Nightfly' },
+    { id: 14, name: 'Kamakiriad' },
+    { id: 15, name: 'Morph the Cat' },
+    { id: 16, name: 'Sunken Condos' },
   ];
 
   public getRecords(): RecordEntity[] {
