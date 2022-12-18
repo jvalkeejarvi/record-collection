@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { RecordEntity } from '@record-collection/records-client';
+import { RecordDto } from '@record-collection/records-client';
 import { useCallback } from 'react';
 
 import {
@@ -40,7 +40,7 @@ export function RecordList() {
       field: 'name',
       headerName: 'Name',
       width: 500,
-      renderCell: (params: GridRenderCellParams<RecordEntity>) => <Record record={params.row}></Record>
+      renderCell: (params: GridRenderCellParams<RecordDto>) => <Record record={params.row}></Record>
     },
     { field: 'artist', headerName: 'Artist', width: 500 },
     {
@@ -51,7 +51,7 @@ export function RecordList() {
       sortable: false,
       filterable: false,
       width: 100,
-      renderCell: (params: GridRenderCellParams<RecordEntity>) =>
+      renderCell: (params: GridRenderCellParams<RecordDto>) =>
         <DeleteRecord id={params.row.id} onDelete={onDelete}></DeleteRecord>
     },
   ];

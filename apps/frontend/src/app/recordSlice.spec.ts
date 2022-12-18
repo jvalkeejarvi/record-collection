@@ -1,4 +1,4 @@
-import { RecordEntity } from '@record-collection/records-client';
+import { RecordDto } from '@record-collection/records-client';
 import { mockOf } from '../utils/test-utils';
 import {
   addRecord,
@@ -39,7 +39,7 @@ describe('records reducer', () => {
     state = recordsReducer(
       state,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      fetchRecords.fulfilled([mockOf<RecordEntity>({ id: 1 })], null as any)
+      fetchRecords.fulfilled([mockOf<RecordDto>({ id: 1 })], null as any)
     );
 
     expect(state).toEqual(
@@ -69,7 +69,7 @@ describe('records reducer', () => {
     let state = recordsReducer(
       undefined,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      fetchRecords.fulfilled(mockOf<RecordEntity[]>([{ id: 4 }, { id: 5 }]), null as any)
+      fetchRecords.fulfilled(mockOf<RecordDto[]>([{ id: 4 }, { id: 5 }]), null as any)
     );
 
     state = recordsReducer(
@@ -129,7 +129,7 @@ describe('records reducer', () => {
     let state = recordsReducer(
       undefined,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      fetchRecords.fulfilled([mockOf<RecordEntity>({ id: 1 })], null as any)
+      fetchRecords.fulfilled([mockOf<RecordDto>({ id: 1 })], null as any)
     );
 
     expect(state).toEqual(
@@ -141,7 +141,7 @@ describe('records reducer', () => {
     state = recordsReducer(
       state,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      addRecord.fulfilled({ id: 90 }, null as any, null as any)
+      addRecord.fulfilled(mockOf<RecordDto>({ id: 90 }), null as any, null as any)
     );
 
     expect(state).toEqual(

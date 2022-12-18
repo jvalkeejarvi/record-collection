@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { CreateRecordDto } from '../models/CreateRecordDto';
-import type { RecordEntity } from '../models/RecordEntity';
+import type { RecordDto } from '../models/RecordDto';
 import type { UpdateRecordDto } from '../models/UpdateRecordDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -13,10 +13,10 @@ export class RecordsService {
     constructor(public readonly httpRequest: BaseHttpRequest) {}
 
     /**
-     * @returns RecordEntity
+     * @returns RecordDto
      * @throws ApiError
      */
-    public getRecords(): CancelablePromise<Array<RecordEntity>> {
+    public getRecords(): CancelablePromise<Array<RecordDto>> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/api/records',
@@ -25,12 +25,12 @@ export class RecordsService {
 
     /**
      * @param requestBody
-     * @returns RecordEntity
+     * @returns RecordDto
      * @throws ApiError
      */
     public createRecord(
         requestBody: CreateRecordDto,
-    ): CancelablePromise<RecordEntity> {
+    ): CancelablePromise<RecordDto> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/api/records',

@@ -1,4 +1,4 @@
-import { CreateRecordDto, RecordEntity } from '@record-collection/records-client';
+import { CreateRecordDto, RecordDto } from '@record-collection/records-client';
 import {
   Action,
   AnyAction,
@@ -13,14 +13,14 @@ import { recordsService } from './recordApi';
 
 export const RECORDS_FEATURE_KEY = 'records';
 
-export interface RecordsState extends EntityState<RecordEntity> {
+export interface RecordsState extends EntityState<RecordDto> {
   loadingStatus: 'not loaded' | 'loading' | 'loaded' | 'error';
   error?: string | null;
   recordsOnDeletion: { [key: number]: boolean };
   pageNumber: number;
 }
 
-export const recordsAdapter = createEntityAdapter<RecordEntity>();
+export const recordsAdapter = createEntityAdapter<RecordDto>();
 
 export const fetchRecords = createAsyncThunk(
   'records/fetch',

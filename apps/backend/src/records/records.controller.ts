@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateRecordDto } from './create-record-dto';
-import { RecordEntity } from './record-dto';
+import { RecordDto } from './record-dto';
 import { RecordsService } from './records.service';
 import { UpdateRecordDto } from './update-recort-dto';
 
@@ -11,24 +11,24 @@ export class RecordsController {
   public constructor(private readonly recordsService: RecordsService) {}
 
   @Get()
-  public getRecords(): RecordEntity[] {
+  public getRecords(): RecordDto[] {
     return this.recordsService.getRecords();
   }
 
   @Get(':id')
-  public getRecord(@Param('id', ParseIntPipe) id: number): RecordEntity | void {
+  public getRecord(@Param('id', ParseIntPipe) id: number): RecordDto | void {
     return this.recordsService.getRecordById(id);
   }
 
   @Post()
-  public createRecord(@Body() record: CreateRecordDto): RecordEntity {
+  public createRecord(@Body() record: CreateRecordDto): RecordDto {
     return this.recordsService.createRecord(record);
   }
 
   @Patch(':id')
   public updateRecord(
     @Param('id', ParseIntPipe) id: number, @Body() updateData: UpdateRecordDto
-  ): RecordEntity | void {
+  ): RecordDto | void {
     return this.recordsService.updateRecord(id, updateData);
   }
 

@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRecordDto } from './create-record-dto';
-import { RecordEntity } from './record-dto';
+import { RecordDto } from './record-dto';
 import { UpdateRecordDto } from './update-recort-dto';
 
 @Injectable()
 export class RecordsService {
-  private records: RecordEntity[] = [
+  private records: RecordDto[] = [
     { id: 1, name: 'Can\'t Buy A Thrill', artist: 'Steely Dan' },
     { id: 2, name: 'Countdown To Ecstacy', artist: 'Steely Dan' },
     { id: 3, name: 'Pretzel Logic', artist: 'Steely Dan' },
@@ -24,11 +24,11 @@ export class RecordsService {
     { id: 16, name: 'Sunken Condos', artist: 'Donald Fagen' },
   ];
 
-  public getRecords(): RecordEntity[] {
+  public getRecords(): RecordDto[] {
     return this.records;
   }
 
-  public getRecordById(id: number): RecordEntity | void {
+  public getRecordById(id: number): RecordDto | void {
     const product = this.records.find(r => r.id === id);
     if (!product) {
       throw new NotFoundException('Could not find record');
@@ -36,7 +36,7 @@ export class RecordsService {
     return product;
   }
 
-  public createRecord(record: CreateRecordDto): RecordEntity {
+  public createRecord(record: CreateRecordDto): RecordDto {
     const maxId = Math.max(...this.records.map(r => r.id));
     const newRecord = {
       id: maxId + 1,
@@ -50,7 +50,7 @@ export class RecordsService {
     this.records = this.records.filter(r => r.id !== id);
   }
 
-  public updateRecord(id: number, data: UpdateRecordDto): RecordEntity | void {
+  public updateRecord(id: number, data: UpdateRecordDto): RecordDto | void {
     const productIndex = this.records.findIndex(r => r.id === id);
     if (id < 0) {
       throw new NotFoundException('Could not find record');

@@ -10,7 +10,7 @@ export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { CreateRecordDto } from './models/CreateRecordDto';
-export type { RecordEntity } from './models/RecordEntity';
+export type { RecordDto } from './models/RecordDto';
 export type { UpdateRecordDto } from './models/UpdateRecordDto';
 
 export { RecordsService } from './services/RecordsService';

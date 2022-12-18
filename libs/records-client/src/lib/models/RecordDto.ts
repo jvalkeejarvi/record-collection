@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type RecordEntity = {
+export type RecordDto = {
     id: number;
     name: string;
     artist: string;
