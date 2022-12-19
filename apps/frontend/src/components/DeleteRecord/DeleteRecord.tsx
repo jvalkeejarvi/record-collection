@@ -7,7 +7,7 @@ import { useAppSelector } from '../../hooks';
 
 export interface DeleteRecordProps {
   id: number;
-  onDelete: (id : number) => void;
+  onDelete: (id: number) => void;
 }
 
 export function DeleteRecord({ id, onDelete }: DeleteRecordProps) {
