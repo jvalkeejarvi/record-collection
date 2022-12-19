@@ -1,5 +1,17 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  NotFoundException,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post
+} from '@nestjs/common';
+import { ApiNotFoundResponse, ApiTags } from '@nestjs/swagger';
 import { CreateRecordDto } from './create-record-dto';
 import { RecordDto } from './record-dto';
 import { RecordsService } from './records.service';
@@ -16,8 +28,13 @@ export class RecordsController {
   }
 
   @Get(':id')
-  public getRecord(@Param('id', ParseIntPipe) id: number): RecordDto | void {
-    return this.recordsService.getRecordById(id);
+  @ApiNotFoundResponse()
+  public getRecord(@Param('id', ParseIntPipe) id: number): RecordDto {
+    const record = this.recordsService.getRecordById(id);
+    if (!record) {
+      throw new NotFoundException();
+    }
+    return record;
   }
 
   @Post()
@@ -26,14 +43,25 @@ export class RecordsController {
   }
 
   @Patch(':id')
+  @ApiNotFoundResponse()
   public updateRecord(
     @Param('id', ParseIntPipe) id: number, @Body() updateData: UpdateRecordDto
-  ): RecordDto | void {
-    return this.recordsService.updateRecord(id, updateData);
+  ): RecordDto {
+    try {
+      return this.recordsService.updateRecord(id, updateData);
+    } catch (err) {
+      throw new NotFoundException();
+    }
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNotFoundResponse()
   public deleteRecord(@Param('id', ParseIntPipe) id: number): void {
-    return this.recordsService.deleteRecord(id);
+    try {
+      this.recordsService.deleteRecord(id);
+    } catch (err) {
+      throw new NotFoundException();
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateRecordDto } from './create-record-dto';
 import { RecordDto } from './record-dto';
 import { UpdateRecordDto } from './update-recort-dto';
@@ -28,12 +28,8 @@ export class RecordsService {
     return this.records;
   }
 
-  public getRecordById(id: number): RecordDto | void {
-    const product = this.records.find(r => r.id === id);
-    if (!product) {
-      throw new NotFoundException('Could not find record');
-    }
-    return product;
+  public getRecordById(id: number): RecordDto | undefined {
+    return this.records.find(r => r.id === id);
   }
 
   public createRecord(record: CreateRecordDto): RecordDto {
@@ -47,15 +43,19 @@ export class RecordsService {
   }
 
   public deleteRecord(id: number): void {
-    this.records = this.records.filter(r => r.id !== id);
+    const filteredRecords = this.records.filter(r => r.id !== id);
+    if (filteredRecords.length === this.records.length) {
+      throw Error();
+    }
+    this.records = filteredRecords;
   }
 
-  public updateRecord(id: number, data: UpdateRecordDto): RecordDto | void {
+  public updateRecord(id: number, data: UpdateRecordDto): RecordDto {
     const productIndex = this.records.findIndex(r => r.id === id);
-    if (id < 0) {
-      throw new NotFoundException('Could not find record');
-    }
     const originalProduct = this.records[productIndex];
+    if (!originalProduct) {
+      throw Error();
+    }
     this.records[productIndex] = {
       ...originalProduct,
       ...data

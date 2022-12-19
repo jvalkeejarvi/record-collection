@@ -41,12 +41,12 @@ export class RecordsService {
 
     /**
      * @param id
-     * @returns any
+     * @returns RecordDto
      * @throws ApiError
      */
     public getRecord(
         id: number,
-    ): CancelablePromise<any> {
+    ): CancelablePromise<RecordDto> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/api/records/{id}',
@@ -59,13 +59,13 @@ export class RecordsService {
     /**
      * @param id
      * @param requestBody
-     * @returns any
+     * @returns RecordDto
      * @throws ApiError
      */
     public updateRecord(
         id: number,
         requestBody: UpdateRecordDto,
-    ): CancelablePromise<any> {
+    ): CancelablePromise<RecordDto> {
         return this.httpRequest.request({
             method: 'PATCH',
             url: '/api/records/{id}',
@@ -79,12 +79,12 @@ export class RecordsService {
 
     /**
      * @param id
-     * @returns any
+     * @returns void
      * @throws ApiError
      */
     public deleteRecord(
         id: number,
-    ): CancelablePromise<any> {
+    ): CancelablePromise<void> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/api/records/{id}',
