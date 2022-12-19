@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { CreateRecordDto } from '@record-collection/records-client';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { recordsService } from '../../app/recordApi';
 import { recordsAdapter, RecordsState, RECORDS_FEATURE_KEY } from '../../app/recordSlice';
 import { AppStore } from '../../store';
 
@@ -36,6 +37,24 @@ describe('CreateRecord', () => {
     fireEvent.change(artistInput!, { target: { value: 'test artist' } });
 
     expect(button).toBeEnabled();
+  });
+
+  it('should only add record when submit is enabled', () => {
+    renderWithProviders(<CreateRecord />);
+    jest.spyOn(recordsService, 'createRecord');
+
+    const nameInput = screen.getByLabelText('name');
+    const artistInput = screen.getByLabelText('artist');
+
+    fireEvent.change(nameInput!, { target: { value: 'abc' } });
+    fireEvent.submit(artistInput!);
+
+    expect(recordsService.createRecord).not.toHaveBeenCalled();
+
+    fireEvent.change(artistInput!, { target: { value: 'def' } });
+    fireEvent.submit(artistInput!);
+
+    expect(recordsService.createRecord).toHaveBeenCalled();
   });
 
   describe('submit tests', () => {
