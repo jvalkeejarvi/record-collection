@@ -17,11 +17,6 @@ jest.mock('../../app/recordApi.ts', () => ({
 }));
 
 describe('CreateRecord', () => {
-  it('should render successfully', () => {
-    const { baseElement } = renderWithProviders(<CreateRecord />);
-    expect(baseElement).toBeTruthy();
-  });
-
   it('should have button disabled when input is empty', () => {
     renderWithProviders(<CreateRecord />);
     expect(screen.getByRole('button')).toBeDisabled();
