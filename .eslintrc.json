@@ -124,6 +124,10 @@
       }
     },
     {
+      "files": ["*.spec.tsx", "*.spec.jsx"],
+      "extends": ["plugin:jest-dom/recommended", "plugin:testing-library/react"]
+    },
+    {
       "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
       "env": {
         "jest": true
