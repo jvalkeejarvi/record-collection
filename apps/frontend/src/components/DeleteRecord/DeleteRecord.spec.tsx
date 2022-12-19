@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { act } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 import { recordsAdapter, RecordsState, RECORDS_FEATURE_KEY } from '../../app/recordSlice';
 import { renderWithProviders } from '../../utils/test-utils';
@@ -17,16 +17,14 @@ jest.mock('@mui/material', () => {
 describe('DeleteRecord', () => {
   it('should use delete callback on button click', () => {
     const mockDelete = jest.fn();
-    const { baseElement, getByRole } = renderWithProviders(<DeleteRecord id={3} onDelete={mockDelete} />);
+    renderWithProviders(<DeleteRecord id={3} onDelete={mockDelete} />);
 
-    act(() => {
-      const button = getByRole('button');
-      expect(button).toBeEnabled();
-      button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    });
+    const button = screen.getByRole('button');
+    expect(button).toBeEnabled();
+    fireEvent.click(button);
 
     expect(mockDelete).toHaveBeenCalledWith(3);
-    expect(baseElement.textContent).not.toContain('LOADING');
+    expect(screen.queryByText('LOADING')).not.toBeInTheDocument();
   });
 
   it('should disable button and show progress spinner while deleting', () => {
@@ -36,7 +34,7 @@ describe('DeleteRecord', () => {
       recordsOnDeletion: { 3: true },
       error: null
     });
-    const { baseElement, getByRole } = renderWithProviders(
+    renderWithProviders(
       <DeleteRecord id={3} onDelete={jest.fn()} />,
       {
         preloadedState: {
@@ -45,8 +43,8 @@ describe('DeleteRecord', () => {
       }
     );
 
-    const button = getByRole('button');
+    const button = screen.getByRole('button');
     expect(button).toBeDisabled();
-    expect(baseElement.textContent).toContain('LOADING');
+    expect(screen.getByText('LOADING')).toBeInTheDocument();
   });
 });

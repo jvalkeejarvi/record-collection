@@ -1,4 +1,5 @@
-import { act } from 'react-dom/test-utils';
+import '@testing-library/jest-dom';
+import { fireEvent, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 import { recordsAdapter, RecordsState, RECORDS_FEATURE_KEY } from '../../app/recordSlice';
@@ -43,34 +44,31 @@ describe('RecordDetail', () => {
     });
 
     initialState = recordsAdapter.setAll(emptyState, {
-      5: { id: 5, name: 'asdf', body: 'asdf', email: 'asdf' },
-      18: { id: 18, name: 'bb', body: 'cc', email: 'dd' },
+      5: { id: 5, name: 'asdf', artist: 'asdf' },
+      18: { id: 18, name: 'bb', artist: 'cc' },
     });
   });
 
   it('should go back to list', () => {
-    const { baseElement, getByRole } = renderWithState(initialState);
+    renderWithState(initialState);
+    const goHomeLink = screen.getByRole('link');
+    fireEvent.click(goHomeLink);
 
-    act(() => {
-      const goHomeLink = getByRole('link');
-      goHomeLink?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    });
-
-    expect(baseElement.textContent).toBe('BACK TO LIST');
+    expect(screen.getByText('BACK TO LIST')).toBeInTheDocument();
   });
 
   it('should render successfully', () => {
-    const { baseElement } = renderWithState(initialState);
-    expect(baseElement.textContent).not.toContain('Record not found');
+    renderWithState(initialState);
+    expect(screen.queryByText('Record not found')).not.toBeInTheDocument();
   });
 
   it('should render loading spinner', () => {
-    const { baseElement } = renderWithState({ ...emptyState, loadingStatus: 'loading' });
-    expect(baseElement.textContent).toContain('LOADING');
+    renderWithState({ ...emptyState, loadingStatus: 'loading' });
+    expect(screen.getByText('LOADING')).toBeInTheDocument();
   });
 
   it('should show message when record is not found', () => {
-    const { baseElement } = renderWithState(emptyState);
-    expect(baseElement.textContent).toContain('Record not found');
+    renderWithState(emptyState);
+    expect(screen.getByText('Record not found')).toBeInTheDocument();
   });
 });
