@@ -1,10 +1,21 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { CreateRecordDto } from '@record-collection/records-client';
 import '@testing-library/jest-dom';
-import { fireEvent } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { recordsAdapter, RecordsState, RECORDS_FEATURE_KEY } from '../../app/recordSlice';
+import { AppStore } from '../../store';
 
 import { renderWithProviders } from '../../utils/test-utils';
 import CreateRecord from '../CreateRecord/CreateRecord';
+
+jest.mock('../../app/recordApi.ts', () => ({
+  recordsService: {
+    createRecord: (newRecord: CreateRecordDto) => Promise.resolve({
+      ...newRecord,
+      id: 10
+    })
+  }
+}));
 
 describe('CreateRecord', () => {
   it('should render successfully', () => {
@@ -13,49 +24,67 @@ describe('CreateRecord', () => {
   });
 
   it('should have button disabled when input is empty', () => {
-    const { getByRole } = renderWithProviders(<CreateRecord />);
-    expect(getByRole('button')).toBeDisabled();
+    renderWithProviders(<CreateRecord />);
+    expect(screen.getByRole('button')).toBeDisabled();
   });
 
   it('should enable button only when all form fields have value', () => {
-    const { getByRole } = renderWithProviders(<CreateRecord />);
+    renderWithProviders(<CreateRecord />);
 
-    act(() => {
-      const input = document.querySelector('#new-record-name');
-      fireEvent.change(input!, { target: { value: 'abc' } });
-    });
+    const button = screen.getByRole('button');
 
-    expect(getByRole('button')).toBeDisabled();
+    const nameInput = screen.getByLabelText('name');
+    fireEvent.change(nameInput!, { target: { value: 'abc' } });
 
-    act(() => {
-      const input = document.querySelector('#new-record-artist');
-      fireEvent.change(input!, { target: { value: 'test artist' } });
-    });
+    expect(button).toBeDisabled();
 
-    expect(getByRole('button')).toBeEnabled();
+    const artistInput = screen.getByLabelText('artist');
+    fireEvent.change(artistInput!, { target: { value: 'test artist' } });
+
+    expect(button).toBeEnabled();
   });
 
   describe('submit tests', () => {
     let recordNameInput: Element | null;
     let artistInput: Element | null;
     let button: Element;
+    let store: AppStore;
+
+    const setup = () => {
+      const initialState: RecordsState = recordsAdapter.getInitialState({
+        loadingStatus: 'loaded',
+        pageNumber: 0,
+        recordsOnDeletion: {},
+        error: null,
+        entities: {
+          8: { id: 8, name: 'Test record 8', artist: 'Test Artist' },
+          9: { id: 9, name: 'Test record 9', artist: 'Test Artist 2' },
+        }
+      });
+      const { store } = renderWithProviders(
+        <CreateRecord />,
+        {
+          preloadedState: {
+            [RECORDS_FEATURE_KEY]: initialState
+          }
+        }
+      );
+      return store;
+    };
 
     beforeEach(() => {
-      const { getByRole } = renderWithProviders(<CreateRecord />);
+      store = setup();
 
-      recordNameInput = document.querySelector('#new-record-name');
-      artistInput = document.querySelector('#new-record-artist');
-      button = getByRole('button');
+      recordNameInput = screen.getByLabelText('name');
+      artistInput = screen.getByLabelText('artist');
+      button = screen.getByRole('button');
 
       fireEvent.change(recordNameInput!, { target: { value: 'abc' } });
       fireEvent.change(artistInput!, { target: { value: 'test artist 1' } });
-
     });
 
     it('should set form to initial state when button is clicked', () => {
-      act(() => {
-        button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-      });
+      fireEvent.click(button);
 
       expect(recordNameInput).toHaveValue('');
       expect(artistInput).toHaveValue('');
@@ -63,13 +92,21 @@ describe('CreateRecord', () => {
     });
 
     it('should set form to initial state when submitted', () => {
-      act(() => {
-        fireEvent.submit(artistInput!);
-      });
+      fireEvent.submit(artistInput!);
 
       expect(recordNameInput).toHaveValue('');
       expect(artistInput).toHaveValue('');
       expect(button).toBeDisabled();
+    });
+
+    it('should add newly created item to store', async () => {
+      fireEvent.click(button);
+
+      await waitFor(() => expect(store.getState().records.entities).toEqual({
+        8: { id: 8, name: 'Test record 8', artist: 'Test Artist' },
+        9: { id: 9, name: 'Test record 9', artist: 'Test Artist 2' },
+        10: { id: 10, name: 'abc', artist: 'test artist 1' },
+      }));
     });
   });
 });

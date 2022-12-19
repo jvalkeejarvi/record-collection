@@ -7,7 +7,7 @@ import { useAppDispatch } from '../../hooks';
 const createFormFields = ['name', 'artist'] as const;
 
 export function CreateRecord() {
-  const [newRecord, setNewRecord] = useState({ name: '', artist: '', submitDisabled: true });
+  const [newRecord, setNewRecord] = useState({ name: '', artist: '' });
 
   const dispatch = useAppDispatch();
 
@@ -15,24 +15,21 @@ export function CreateRecord() {
     const name = e.target.name;
     const value = e.target.value;
 
-    const newState = {
-      ...newRecord,
+    setNewRecord(previousFormValue => ({
+      ...previousFormValue,
       [name]: value,
-    };
-    setNewRecord({
-      ...newState,
-      submitDisabled: !createFormFields.every(field => newState[field])
-    });
+    }));
   };
 
+  const submitDisabled = !createFormFields.every(field => newRecord[field]);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    if (newRecord.submitDisabled) {
+    if (submitDisabled) {
       return;
     }
     event.preventDefault();
-    const { submitDisabled, ...record } = newRecord;
-    dispatch(addRecord(record));
-    setNewRecord({ name: '', artist: '', submitDisabled: true });
+    dispatch(addRecord(newRecord));
+    setNewRecord({ name: '', artist: '' });
   };
 
   return (
@@ -43,7 +40,6 @@ export function CreateRecord() {
             key={field}
             name={field}
             label={field}
-            id={`new-record-${field}`}
             type="text"
             size="small"
             value={newRecord[field]}
@@ -54,7 +50,7 @@ export function CreateRecord() {
         type="submit"
         variant="contained"
         size="small"
-        disabled={newRecord.submitDisabled}
+        disabled={submitDisabled}
       >Create new</Button>
     </form>
   );
