@@ -1,4 +1,4 @@
-import { CreateRecordDto, RecordDto } from '@record-collection/records-client';
+import { CreateRecordDto, RecordDto, UpdateRecordDto } from '@record-collection/records-client';
 import {
   Action,
   AnyAction,
@@ -39,6 +39,11 @@ export const addRecord = createAsyncThunk(
   async ({ name, artist }: CreateRecordDto) => recordsService.createRecord({ name, artist })
 );
 
+export const updateRecord = createAsyncThunk(
+  'records/edit',
+  async ({ id, changes }: { id: number, changes: UpdateRecordDto }) => recordsService.updateRecord(id, changes)
+);
+
 export const initialRecordsState: RecordsState =
   recordsAdapter.getInitialState({
     loadingStatus: 'not loaded',
@@ -69,6 +74,18 @@ export const recordsSlice = createSlice({
       .addCase(
         addRecord.fulfilled, (state, action) => {
           recordsAdapter.addOne(state, action);
+        }
+      )
+      .addCase(updateRecord.pending, state => {
+        state.loadingStatus = 'loading';
+      })
+      .addCase(updateRecord.rejected, state => {
+        state.loadingStatus = 'loaded';
+      })
+      .addCase(
+        updateRecord.fulfilled, (state, action) => {
+          recordsAdapter.upsertOne(state, action.payload);
+          state.loadingStatus = 'loaded';
         }
       )
       .addCase(deleteRecord.pending, (state, action) => {

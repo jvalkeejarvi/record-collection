@@ -1,33 +1,23 @@
-import { CircularProgress } from '@mui/material';
-import { useAppSelector } from '../../hooks';
-import { getRecordsState, selectRecordById } from '../../app/recordSlice';
+import { List, ListItem, ListItemText } from '@mui/material';
+import { RecordDto } from '@record-collection/records-client';
 
 export interface RecordInfoProps {
-  id: number;
+  record: RecordDto;
 }
 
-export function RecordInfo({ id }: RecordInfoProps) {
-  const record = useAppSelector(state => selectRecordById(state, id));
-  const { loadingStatus } = useAppSelector(getRecordsState);
-
-  if (loadingStatus !== 'loaded') {
-    return <div>
-      <CircularProgress />
-    </div>;
-  }
-
-  if (!record) {
-    return <div>
-      <div>Record not found</div>
-    </div>;
-  }
-
+export function RecordInfo({ record }: RecordInfoProps) {
   return (
-    <div>
-      <p>{record.artist}</p>
-      <p>{record.name}</p>
-      <p>{record.id}</p>
-    </div>
+    <List>
+      <ListItem>
+        <ListItemText primary="Artist" secondary={record.artist}></ListItemText>
+      </ListItem>
+      <ListItem>
+        <ListItemText primary="Record" secondary={record.name}></ListItemText>
+      </ListItem>
+      <ListItem>
+        <ListItemText primary="Id" secondary={record.id}></ListItemText>
+      </ListItem>
+    </List>
   );
 }
 
