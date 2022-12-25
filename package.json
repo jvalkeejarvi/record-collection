@@ -6,7 +6,8 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "generate-client": "openapi --input http://localhost:3333/swagger-json --client axios --output libs/records-client/src/lib/ --name RecordsClient"
+    "generate-client": "openapi --input http://localhost:3333/swagger-json --client axios --output libs/records-client/src/lib/ --name RecordsClient",
+    "generate-client2": "openapi-generator-cli generate -i http://localhost:3333/swagger-json -g typescript-fetch -o libs/records-client2 --additional-properties=ngVersion=6.1.7,npmName=restClient,supportsES6=true,npmVersion=6.9.0,withInterfaces=true --type-mappings=DateTime=Date"
   },
   "private": true,
   "dependencies": {
@@ -44,6 +45,7 @@
     "@nrwl/react": "15.3.3",
     "@nrwl/web": "15.3.3",
     "@nrwl/workspace": "15.3.3",
+    "@openapitools/openapi-generator-cli": "^2.5.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@svgr/webpack": "^6.1.2",
     "@testing-library/jest-dom": "^5.16.5",
