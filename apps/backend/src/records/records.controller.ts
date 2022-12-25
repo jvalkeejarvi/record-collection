@@ -9,9 +9,11 @@ import {
   Param,
   ParseIntPipe,
   Patch,
-  Post
+  Post,
+  UseInterceptors
 } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiTags } from '@nestjs/swagger';
+import { UnsubscribeOnCloseInterceptor } from '../interceptors/unsubscribe-on-close-interceptor';
 import { CreateRecordDto } from './create-record-dto';
 import { RecordDto } from './record-dto';
 import { RecordsService } from './records.service';
@@ -23,6 +25,7 @@ export class RecordsController {
   public constructor(private readonly recordsService: RecordsService) {}
 
   @Get()
+  @UseInterceptors(UnsubscribeOnCloseInterceptor)
   public getRecords(): RecordDto[] {
     return this.recordsService.getRecords();
   }
