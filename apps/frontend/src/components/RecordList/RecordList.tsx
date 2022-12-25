@@ -1,4 +1,3 @@
-import { Button } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { RecordDto } from '@record-collection/records-client';
 import { useCallback } from 'react';
@@ -69,12 +68,6 @@ export function RecordList() {
         onPageChange={onPageChange}
       />
       <div>
-        <Button
-          variant="contained"
-          color="error"
-          size="small"
-          onClick={() => dispatch(recordsActions.clear())}
-        >Delete all</Button>
         <CreateRecord />
       </div>
     </div>
