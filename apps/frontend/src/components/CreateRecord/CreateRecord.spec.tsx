@@ -51,8 +51,8 @@ describe('CreateRecord', () => {
     artistInput = screen.getByLabelText('artist');
     button = screen.getByRole('button');
 
-    fireEvent.change(recordNameInput!, { target: { value: 'abc' } });
-    fireEvent.change(artistInput!, { target: { value: 'test artist 1' } });
+    fireEvent.change(recordNameInput, { target: { value: 'abc' } });
+    fireEvent.change(artistInput, { target: { value: 'test artist 1' } });
   });
 
   it('should add newly created item to store', async () => {

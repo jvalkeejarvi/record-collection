@@ -35,12 +35,12 @@ describe('RecordInfoForm', () => {
     const button = screen.getByRole('button');
 
     const nameInput = screen.getByLabelText('name');
-    fireEvent.change(nameInput!, { target: { value: 'abc' } });
+    fireEvent.change(nameInput, { target: { value: 'abc' } });
 
     expect(button).toBeDisabled();
 
     const artistInput = screen.getByLabelText('artist');
-    fireEvent.change(artistInput!, { target: { value: 'test artist' } });
+    fireEvent.change(artistInput, { target: { value: 'test artist' } });
 
     expect(button).toBeEnabled();
   });
@@ -51,13 +51,13 @@ describe('RecordInfoForm', () => {
     const nameInput = screen.getByLabelText('name');
     const artistInput = screen.getByLabelText('artist');
 
-    fireEvent.change(nameInput!, { target: { value: 'abc' } });
-    fireEvent.submit(artistInput!);
+    fireEvent.change(nameInput, { target: { value: 'abc' } });
+    fireEvent.submit(artistInput);
 
     expect(submitFn).not.toHaveBeenCalled();
 
-    fireEvent.change(artistInput!, { target: { value: 'def' } });
-    fireEvent.submit(artistInput!);
+    fireEvent.change(artistInput, { target: { value: 'def' } });
+    fireEvent.submit(artistInput);
 
     expect(submitFn).toHaveBeenCalledWith({
       name: 'abc',
@@ -66,8 +66,8 @@ describe('RecordInfoForm', () => {
   });
 
   describe('submit tests', () => {
-    let recordNameInput: Element | null;
-    let artistInput: Element | null;
+    let recordNameInput: Element;
+    let artistInput: Element;
     let button: Element;
 
     const setup = (initialRecordValue?: CreateRecordDto) => {
@@ -77,8 +77,8 @@ describe('RecordInfoForm', () => {
       artistInput = screen.getByLabelText('artist');
       button = screen.getByRole('button');
 
-      fireEvent.change(recordNameInput!, { target: { value: 'abc' } });
-      fireEvent.change(artistInput!, { target: { value: 'test artist 1' } });
+      fireEvent.change(recordNameInput, { target: { value: 'abc' } });
+      fireEvent.change(artistInput, { target: { value: 'test artist 1' } });
     };
 
     it('should set form to initial record value when it is provided', () => {
@@ -101,7 +101,7 @@ describe('RecordInfoForm', () => {
 
     it('should set form to initial state when submitted', () => {
       setup();
-      fireEvent.submit(artistInput!);
+      fireEvent.submit(artistInput);
 
       expect(recordNameInput).toHaveValue('');
       expect(artistInput).toHaveValue('');
