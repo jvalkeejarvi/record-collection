@@ -13,7 +13,13 @@ export function RecordDetail() {
 
   return (
     <div>
-      <Link component={RouterLink} to={'/'} id="back-to-record-list">Back to collection</Link>
+      <div style={{ marginBottom: '1em' }}>
+        <Link
+          component={RouterLink}
+          to={'/'}
+          id="back-to-record-list"
+        >Back to collection</Link>
+      </div>
 
       <div>
         { record?.artist} - { record?.name }
