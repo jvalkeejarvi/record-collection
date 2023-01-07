@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 import { setupStore } from './store';
 import RecordList from './components/RecordList/RecordList';
 import RecordDetail from './components/RecordDetail/RecordDetail';
+import { ApolloProvider } from '@apollo/client';
+import { recordsClient } from './app/recordApiGql';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,15 +17,17 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <StrictMode>
-    <Provider store={setupStore()}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route index element={<RecordList />} />
-            <Route path=":id" element={<RecordDetail />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+    <ApolloProvider client={recordsClient}>
+      <Provider store={setupStore()}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />}>
+              <Route index element={<RecordList />} />
+              <Route path=":id" element={<RecordDetail />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Provider>
+    </ApolloProvider>
   </StrictMode>
 );

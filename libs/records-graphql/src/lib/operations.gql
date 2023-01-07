@@ -1,0 +1,11 @@
+query getRecords {
+  records {
+    ...RecordFields
+  }
+}
+
+fragment RecordFields on RecordDto {
+  id
+  name
+  artist
+}

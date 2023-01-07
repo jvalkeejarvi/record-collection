@@ -1,0 +1,6 @@
+{
+  "schema": [
+    "apps/backend/src/app/schema.gql",
+    "libs/records-graphql/src/lib/operations.gql"
+  ]
+}

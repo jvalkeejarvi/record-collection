@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@record-collection/records-client": ["libs/records-client/src/index.ts"]
+      "@record-collection/records-client": ["libs/records-client/src/index.ts"],
+      "@record-collection/records-graphql": [
+        "libs/records-graphql/src/index.ts"
+      ]
     },
     "strict": true
   },

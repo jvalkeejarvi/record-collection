@@ -1,0 +1,13 @@
+{
+  "name": "records-graphql",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/records-graphql/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "generate": {
+      "builder": "@nrwl/workspace:run-commands",
+      "command": "npx graphql-codegen --config libs/records-graphql/codegen.yml"
+    }
+  }
+}
