@@ -1,4 +1,5 @@
 import { CreateRecordDto, RecordDto, UpdateRecordDto } from '@record-collection/records-client';
+import { GetRecordsDocument, GetRecordsQuery } from '@record-collection/records-graphql';
 import {
   Action,
   AnyAction,
@@ -10,6 +11,7 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 import { recordsService } from './recordApi';
+import { recordsClient } from './recordApiGql';
 
 export const RECORDS_FEATURE_KEY = 'records';
 
@@ -24,7 +26,7 @@ export const recordsAdapter = createEntityAdapter<RecordDto>();
 
 export const fetchRecords = createAsyncThunk(
   'records/fetch',
-  async () => recordsService.getRecords()
+  async () => (await recordsClient.query<GetRecordsQuery>({ query: GetRecordsDocument })).data.records
 );
 
 export const deleteRecord = createAsyncThunk(
